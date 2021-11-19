@@ -7,7 +7,7 @@ import { MatSnackBar, MatSnackBarConfig, MatSnackBarModule } from '@angular/mate
 describe('Teste do service ProductService', () => {
   let service: ProductService;
   let httpController: HttpTestingController;
-
+  let matSnackBar: MatSnackBar;
   let matSnackBarStub: Partial<MatSnackBar> = {
     open: (message: string, action?: string, config?: MatSnackBarConfig<any>) =>{ return null }
   };
@@ -38,6 +38,7 @@ describe('Teste do service ProductService', () => {
         { provide: MatSnackBar, useValue: matSnackBarStub }
       ]
     });
+    matSnackBar = TestBed.inject(MatSnackBar);
     service = TestBed.inject(ProductService);
     httpController = TestBed.inject(HttpTestingController);
   });
@@ -141,11 +142,25 @@ describe('Teste do service ProductService', () => {
     expect(service.showMessage).toHaveBeenCalledTimes(1)
   })
 
-  it('deverá verificar o método showMessage', () => {
-    //spyOn(service, "showMessage")
-    service.showMessage("Teste",true)
-    service.showMessage("Teste", false)
-    service.showMessage("Teste")
+  it('deverá verificar o método showMessage com erro', () => {
+    const matSnackBarSpy = spyOn(matSnackBar, 'open')
+    service.showMessage("Teste 1",true)
+    expect(matSnackBarSpy.calls.argsFor(0)[0]).toEqual('Teste 1');
+    expect(matSnackBarSpy.calls.argsFor(0)[1]).toEqual('Erro ');
+  })
+
+  it('deverá verificar o método showMessage com info', () => {
+    const matSnackBarSpy = spyOn(matSnackBar, 'open')
+    service.showMessage("Teste 2", false)
+    expect(matSnackBarSpy.calls.argsFor(0)[0]).toEqual('Teste 2');
+    expect(matSnackBarSpy.calls.argsFor(0)[1]).toEqual('Info ');
+  })
+
+  it('deverá verificar o método showMessage default(info)', () => {
+    const matSnackBarSpy = spyOn(matSnackBar, 'open')
+    service.showMessage("Teste 3")
+    expect(matSnackBarSpy.calls.argsFor(0)[0]).toEqual('Teste 3');
+    expect(matSnackBarSpy.calls.argsFor(0)[1]).toEqual('Info ');
   })
 
 });
