@@ -19,13 +19,18 @@ import { of } from 'rxjs';
 import { AppComponent } from './app.component';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 import { ProductData } from './product-data.model';
+import { ProductService } from './product.service';
 
 describe('Teste do componente AppComponent', () => {
-
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
 
-  beforeEach(async () => {
+  let productServiceStub: Partial<ProductService> = {
+    read: () => of<ProductData[]>([{ id: 1, name: 'PRODUTO FAKE', price: 10, quantity: 10 }]),
+    showMessage: () => {}
+  };
+
+  beforeEach( async() => {
     await TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule, // desabilitar animações
@@ -49,7 +54,7 @@ describe('Teste do componente AppComponent', () => {
         DialogBoxComponent
       ],
       providers: [
-
+        { provide: ProductService, useValue: productServiceStub }
       ]
     }).compileComponents();
   });
@@ -68,7 +73,6 @@ describe('Teste do componente AppComponent', () => {
     // por ID
     const title = fixture.debugElement.query(By.css('#title')).nativeElement.textContent;
     expect(title).toEqual('Angular Testing');
-
     // por classe
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('.title')?.textContent).toContain('Angular Testing');
@@ -82,7 +86,6 @@ describe('Teste do componente AppComponent', () => {
 
   it(`deverá testar método onDestroy`, () => {
     component.ngOnDestroy();
-
     expect(component.products$).withContext('products$ inicialmente é undefined').toBe(null);
     component.products$ = of([]).subscribe();
     component.ngOnDestroy();
@@ -106,5 +109,17 @@ describe('Teste do componente AppComponent', () => {
     const total = component.calculaTotal(produtos);
     expect(total).toBe(100);
   })
+
+  it('verifica método fetchData', fakeAsync(() => {
+    component.fetchData();
+    tick()
+    expect(component.products.data.length).toEqual(1)
+    expect(component.products.data[0].id ).toEqual(1)
+    expect(component.products.data[0].name).toEqual('PRODUTO FAKE')
+    expect(component.products.data[0].price).toEqual(10)
+    expect(component.products.data[0].quantity).toEqual(10)
+    expect(component.products.data[0]).toEqual({ id: 1, name: 'PRODUTO FAKE', price: 10, quantity: 10 })
+    expect(component.totalProduts).toEqual(100)
+  }))
 
 });
