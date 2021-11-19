@@ -124,7 +124,18 @@ describe('Teste do service ProductService', () => {
     expect(request.request.method).toBe('POST')
   })
 
-  // https://github.com/dotnetcurry/unit-testing-angular-services/blob/master/src/app/services/data-access.service.spec.ts
+  it('deve testar o método errorHandler', () => {
+    const error = {
+      status: 404,
+      statusText: "Network error"
+    }
+    spyOn(service, "showMessage")
+    service.errorHandler(error)
+    expect(service.showMessage).toHaveBeenCalledTimes(1)
+  })
 
+
+
+    // https://github.com/dotnetcurry/unit-testing-angular-services/blob/master/src/app/services/data-access.service.spec.ts
 
 });
