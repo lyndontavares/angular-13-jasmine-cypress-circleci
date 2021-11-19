@@ -1,5 +1,5 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -21,6 +21,9 @@ import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 import { ProductData } from './product-data.model';
 
 describe('Teste do componente AppComponent', () => {
+
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -51,16 +54,17 @@ describe('Teste do componente AppComponent', () => {
     }).compileComponents();
   });
 
+  beforeEach( async() => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
   it('deverá testar criação do componente', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+    expect(component).toBeTruthy();
   });
 
   it('deverá verificar título na view', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-
     // por ID
     const title = fixture.debugElement.query(By.css('#title')).nativeElement.textContent;
     expect(title).toEqual('Angular Testing');
@@ -70,19 +74,13 @@ describe('Teste do componente AppComponent', () => {
     expect(compiled.querySelector('.title')?.textContent).toContain('Angular Testing');
   });
 
-
   it(`deverá testar método onInit'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const component = fixture.componentInstance;
     spyOn(component, 'fetchData');
     component.ngOnInit();
     expect(component.fetchData).toHaveBeenCalled();
   });
 
   it(`deverá testar método onDestroy`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const component = fixture.componentInstance;
-    fixture.detectChanges();
     component.ngOnDestroy();
 
     expect(component.products$).withContext('products$ inicialmente é undefined').toBe(null);
@@ -92,8 +90,6 @@ describe('Teste do componente AppComponent', () => {
   })
 
   it('deverá testar o método openDialog', fakeAsync(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const component = fixture.componentInstance;
     const acao = 'Adicionar';
     fixture.detectChanges();
     component.openDialog(acao, { id: '1', name: 'fake', price: 1, quantity: 1 });
@@ -106,8 +102,6 @@ describe('Teste do componente AppComponent', () => {
   }))
 
   it('verifica método calculaTotal', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const component = fixture.componentInstance;
     const produtos : ProductData[] = [{ id: 1, name: 'fake', price: 10, quantity: 10 }]
     const total = component.calculaTotal(produtos);
     expect(total).toBe(100);
