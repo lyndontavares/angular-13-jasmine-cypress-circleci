@@ -45,10 +45,7 @@ describe('AppComponent', () => {
         DialogBoxComponent
       ],
       providers: [
-        {
-          provide: MatDialogRef,
-          useValue: {}
-        }
+
       ]
     }).compileComponents();
   });
@@ -93,7 +90,7 @@ describe('AppComponent', () => {
     expect(component.products$).withContext('atribuido observable a products$').toBe(null);
   })
 
-  it('should call openDialog', fakeAsync(() => {
+  it('deverá testar o método openDialog', fakeAsync(() => {
     const fixture = TestBed.createComponent(AppComponent);
     const component = fixture.componentInstance;
     const acao = 'Adicionar';
