@@ -1,9 +1,9 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -18,9 +18,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { AppComponent } from './app.component';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
-import { ProductService } from './product.service';
 
 describe('AppComponent', () => {
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
@@ -45,7 +45,10 @@ describe('AppComponent', () => {
         DialogBoxComponent
       ],
       providers: [
-        ProductService
+        {
+          provide: MatDialogRef,
+          useValue: {}
+        }
       ]
     }).compileComponents();
   });
@@ -81,34 +84,27 @@ describe('AppComponent', () => {
   it(`deverá testar método onDestroy`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const component = fixture.componentInstance;
+    fixture.detectChanges();
+    component.ngOnDestroy();
 
-    (done: DoneFn) => {
-      component.ngOnDestroy();
-      expect(component.products$).withContext('products$ iniciando com undefined').toBe(null);
-      done()
-    }
-
-    (done: DoneFn) => {
-      component.products$ = of([]).subscribe();
-      component.ngOnDestroy();
-      expect(component.products$).withContext('products$ iniciando com obvervable').toBe(null);
-      done()
-    }
-
+    expect(component.products$).withContext('products$ inicialmente é undefined').toBe(null);
+    component.products$ = of([]).subscribe();
+    component.ngOnDestroy();
+    expect(component.products$).withContext('atribuido observable a products$').toBe(null);
   })
 
-  it('deverá testar o método openDialog', () => {
+  it('should call openDialog', fakeAsync(() => {
     const fixture = TestBed.createComponent(AppComponent);
     const component = fixture.componentInstance;
-    fixture.detectChanges();
     const acao = 'Adicionar';
-    (done: DoneFn) => {
-      component.openDialog(acao, {id:'1',name:'fake',price:1,quantity:1});
-      const compiled = fixture.nativeElement as HTMLElement;
-      expect(compiled.querySelector('.h1 strong')?.textContent).withContext('com css class').toContain(acao);
-      expect(compiled.querySelector('#mat-dialog-title')?.textContent).withContext('com css id').toContain(acao);
-      done()
-    }
-  })
+    fixture.detectChanges();
+    component.openDialog(acao, { id: '1', name: 'fake', price: 1, quantity: 1 });
+    fixture.detectChanges();
+    tick();
+    let title = document.getElementById('mat-dialog-title');
+    expect(title.innerText).withContext('com element  id').toContain(acao);
+    title = document.getElementsByTagName('h1')[0]
+    expect(title.innerText).withContext('com element class').toContain(acao);
+  }))
 
 });

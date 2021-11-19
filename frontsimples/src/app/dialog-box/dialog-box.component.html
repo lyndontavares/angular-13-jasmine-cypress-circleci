@@ -1,4 +1,4 @@
-<h1 mat-dialog-title id="mat-dialog-title">{{action}}</h1>
+<h1 mat-dialog-title id="mat-dialog-title"><strong>{{action}}</strong></h1>
 <div mat-dialog-content>
 
   <mat-form-field class="fw" *ngIf="action != 'Delete'; else elseTemplate" >
@@ -25,5 +25,5 @@
 
 <div mat-dialog-actions  align="end">
   <button mat-button (click)="doAction()">{{action}}</button>
-  <button mat-button (click)="closeDialog()" mat-flat-button color="warn">Cancel</button>
+  <button mat-button (click)="closeDialog()" mat-flat-button color="warn">Cancelar</button>
 </div>

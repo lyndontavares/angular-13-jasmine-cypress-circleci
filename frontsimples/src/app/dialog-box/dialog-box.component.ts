@@ -9,16 +9,17 @@ import { ProductData } from '../product-data.model';
 })
 export class DialogBoxComponent {
 
-  action: string;
+  action: string = 'Ação';
   local_data: any;
 
   constructor(
     public dialogRef: MatDialogRef<DialogBoxComponent>,
     //@Optional() is used to prevent error if no data is passed
     @Optional() @Inject(MAT_DIALOG_DATA) public data: ProductData) {
-    console.log(data);
     this.local_data = { ...data };
-    this.action = this.local_data.action;
+    this.action = data.action;
+    console.log(data);
+    console.log(this.action);
   }
 
   doAction() {

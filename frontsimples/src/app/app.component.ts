@@ -18,7 +18,7 @@ export class AppComponent implements OnInit, OnDestroy{
 
   products: MatTableDataSource<ProductData>;
   displayedColumns: string[] = ['id', 'name', 'price', 'quantity', 'total', 'action' ];
-  products$: Subscription;
+  products$: Subscription = null;
   totalProduts = 0;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -33,6 +33,7 @@ export class AppComponent implements OnInit, OnDestroy{
   ngOnDestroy(): void {
     if (this.products$) {
       this.products$.unsubscribe();
+      this.products$ = null
     }
   }
 
