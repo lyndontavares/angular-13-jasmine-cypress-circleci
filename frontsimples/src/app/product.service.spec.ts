@@ -39,11 +39,11 @@ describe('Teste do service ProductService', () => {
     httpController.verify();
   });
 
-  it('deve ser criado o serviço ProductService', () => {
+  it('deverá criar o serviço ProductService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('deve retornar um array de produtos', () => {
+  it('deverá retornar um array de produtos', () => {
     let produtosApi: ProductData[];
     service.read().subscribe(result => {
       produtosApi = result;
@@ -68,7 +68,7 @@ describe('Teste do service ProductService', () => {
   })
   */
 
-  it('deve verificar exceção. Método showMessage é chamado para mostrar mensagem de erro', () => {
+  it('deverá verificar exceção. Método showMessage é chamado para mostrar mensagem de erro', () => {
     spyOn(service, "showMessage")
     service.read().subscribe(null)
     const request = httpController.expectOne(service.baseUrl);
@@ -81,7 +81,7 @@ describe('Teste do service ProductService', () => {
     //expect(service.showMessage).toHaveBeenCalled()     // ou seja, se o método foi simplesmente chamado
   });
 
-  it('deve verificar exclução de produto', () => {
+  it('deverá verificar exclução de produto', () => {
     const id = '1'
     service.delete(id).subscribe()
     const request = httpController.expectOne({
@@ -92,7 +92,7 @@ describe('Teste do service ProductService', () => {
     expect(request.request.method).toBe('DELETE')
   });
 
-  it('deve verificar atualização de produto', () => {
+  it('deverá verificar atualização de produto', () => {
     const produto = {
       id: 1,
       name: 'Produto 1',
@@ -108,7 +108,7 @@ describe('Teste do service ProductService', () => {
     expect(request.request.method).toBe('PUT')
   })
 
-  it('deve verificar criação de produto', () => {
+  it('deverá verificar criação de produto', () => {
     const produto = {
       id: 1,
       name: 'Produto 1',
@@ -124,7 +124,7 @@ describe('Teste do service ProductService', () => {
     expect(request.request.method).toBe('POST')
   })
 
-  it('deve testar o método errorHandler', () => {
+  it('deverá testar o método errorHandler', () => {
     const error = {
       status: 404,
       statusText: "Network error"

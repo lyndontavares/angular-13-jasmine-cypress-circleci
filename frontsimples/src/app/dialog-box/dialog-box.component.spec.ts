@@ -30,7 +30,7 @@ describe('DialogBoxComponent', () => {
       providers: [
         {
           provide: MatDialogRef,
-          useValue: { width: '450px', height: '380px' }
+          useValue: { close: () => { } }
         },
         {
           provide: MAT_DIALOG_DATA,
@@ -50,4 +50,21 @@ describe('DialogBoxComponent', () => {
   it('deverá ser criado componente DialogBoxComponent', () => {
     expect(component).toBeTruthy();
   });
+
+  it('deverá verificar o método doAction', () => {
+    const action = 'Adicionar';
+    const local_data = { id: '1', name: 'fake', price: 1, quantity: 1, action: 'Adicionar' };
+    component.action=action
+    component.local_data=local_data
+    spyOn(component.dialogRef, 'close')
+    component.doAction();
+    expect(component.dialogRef.close).toHaveBeenCalledWith({ event: action, data: local_data });
+  });
+
+  it('deverá verificar o método closeDialog', () => {
+    spyOn(component.dialogRef, 'close')
+    component.closeDialog();
+    expect(component.dialogRef.close).toHaveBeenCalledWith({ event: 'Cancel' });
+  });
+
 });

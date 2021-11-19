@@ -18,8 +18,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { AppComponent } from './app.component';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
+import { ProductData } from './product-data.model';
 
-describe('AppComponent', () => {
+describe('Teste do componente AppComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -103,5 +104,13 @@ describe('AppComponent', () => {
     title = document.getElementsByTagName('h1')[0]
     expect(title.innerText).withContext('com element class').toContain(acao);
   }))
+
+  it('verifica método calculaTotal', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const component = fixture.componentInstance;
+    const produtos : ProductData[] = [{ id: 1, name: 'fake', price: 10, quantity: 10 }]
+    const total = component.calculaTotal(produtos);
+    expect(total).toBe(100);
+  })
 
 });
