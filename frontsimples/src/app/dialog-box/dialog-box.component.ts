@@ -1,11 +1,6 @@
 import { Component, Inject, Optional } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
-export interface UsersData {
-  name: string;
-  id: number;
-}
-
+import { ProductData } from '../product-data.model';
 
 @Component({
   selector: 'app-dialog-box',
@@ -20,7 +15,7 @@ export class DialogBoxComponent {
   constructor(
     public dialogRef: MatDialogRef<DialogBoxComponent>,
     //@Optional() is used to prevent error if no data is passed
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: UsersData) {
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: ProductData) {
     console.log(data);
     this.local_data = { ...data };
     this.action = this.local_data.action;
