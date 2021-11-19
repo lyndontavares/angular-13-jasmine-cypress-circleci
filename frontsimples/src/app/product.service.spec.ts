@@ -2,11 +2,16 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ProductService } from './product.service';
 import { ProductData } from './product-data.model';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarConfig, MatSnackBarModule } from '@angular/material/snack-bar';
 
 describe('Teste do service ProductService', () => {
   let service: ProductService;
   let httpController: HttpTestingController;
+
+  let matSnackBarStub: Partial<MatSnackBar> = {
+    open: (message: string, action?: string, config?: MatSnackBarConfig<any>) =>{ return null }
+  };
+
   const produtosDummy = [
     {
       id: 1,
@@ -26,9 +31,11 @@ describe('Teste do service ProductService', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        MatSnackBarModule],
+        MatSnackBarModule
+      ],
       providers: [
-        ProductService
+        ProductService,
+        { provide: MatSnackBar, useValue: matSnackBarStub }
       ]
     });
     service = TestBed.inject(ProductService);
@@ -43,7 +50,7 @@ describe('Teste do service ProductService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('deverá retornar um array de produtos', () => {
+  it('deverá vefificar método read retornando um array de produtos', () => {
     let produtosApi: ProductData[];
     service.read().subscribe(result => {
       produtosApi = result;
@@ -68,7 +75,7 @@ describe('Teste do service ProductService', () => {
   })
   */
 
-  it('deverá verificar exceção. Método showMessage é chamado para mostrar mensagem de erro', () => {
+  it('deverá verificar exceção no método read. Método showMessage é chamado para mostrar mensagem de erro', () => {
     spyOn(service, "showMessage")
     service.read().subscribe(null)
     const request = httpController.expectOne(service.baseUrl);
@@ -132,6 +139,13 @@ describe('Teste do service ProductService', () => {
     spyOn(service, "showMessage")
     service.errorHandler(error)
     expect(service.showMessage).toHaveBeenCalledTimes(1)
+  })
+
+  it('deverá verificar o método showMessage', () => {
+    //spyOn(service, "showMessage")
+    service.showMessage("Teste",true)
+    service.showMessage("Teste", false)
+    service.showMessage("Teste")
   })
 
 });
