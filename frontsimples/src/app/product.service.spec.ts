@@ -62,6 +62,23 @@ describe('Teste do service ProductService', () => {
     expect(produtosApi).toEqual(produtosDummy); // verifica se o array retornado é o mesmo que o array dummy
   });
 
+  it('deverá vefificar readById read retornando um produto', () => {
+    let produto: ProductData;
+    const id = '1'
+    service.readById(id).subscribe(result => {
+      produto = result;
+    });
+    const request = httpController.expectOne(
+      {
+        method: "GET",
+        url: service.baseUrl + `/${id}`
+      }
+    );
+    request.flush(produtosDummy[0]);
+    expect(request.request.method).toBe('GET');
+    expect(produto).toEqual(produtosDummy[0]);
+  });
+
   /*
   //caso o subscribe retorne erro. No nosso projeto exemplo, não é possível testar isso.
   it('deve verificar exceção', () => {
@@ -101,12 +118,7 @@ describe('Teste do service ProductService', () => {
   });
 
   it('deverá verificar atualização de produto', () => {
-    const produto = {
-      id: 1,
-      name: 'Produto 1',
-      price: 100,
-      quantity: 10
-    }
+    const produto = produtosDummy[0]
     service.update(produto).subscribe()
     const request = httpController.expectOne({
       method: "PUT",
@@ -117,12 +129,7 @@ describe('Teste do service ProductService', () => {
   })
 
   it('deverá verificar criação de produto', () => {
-    const produto = {
-      id: 1,
-      name: 'Produto 1',
-      price: 100,
-      quantity: 10
-    }
+    const produto = produtosDummy[0]
     service.create(produto).subscribe()
     const request = httpController.expectOne({
       method: "POST",
@@ -130,6 +137,66 @@ describe('Teste do service ProductService', () => {
     })
     request.flush(produto)
     expect(request.request.method).toBe('POST')
+  })
+
+  it('deverá verificar exceção no método create', () => {
+    spyOn(service, "showMessage")
+    const produto = produtosDummy[0]
+    service.create(produto).subscribe()
+    const request = httpController.expectOne({
+      method: "POST",
+      url: service.baseUrl
+    })
+    request.flush("Something went wrong", {
+      status: 404,
+      statusText: "Network error"
+    });
+    expect(service.showMessage).toHaveBeenCalledTimes(1)
+  })
+
+  it('deverá verificar exceção no método update', () => {
+    spyOn(service, "showMessage")
+    const produto = produtosDummy[0]
+    service.update(produto).subscribe()
+    const request = httpController.expectOne({
+      method: "PUT",
+      url: service.baseUrl + `/${produto.id}`
+    })
+    request.flush("Something went wrong", {
+      status: 404,
+      statusText: "Network error"
+    });
+    expect(service.showMessage).toHaveBeenCalledTimes(1)
+  })
+
+  it('deverá verificar exceção no método delete', () => {
+    spyOn(service, "showMessage")
+    const id = '1'
+    service.delete(id).subscribe()
+    const request = httpController.expectOne({
+      method: "DELETE",
+      url: service.baseUrl + `/${id}`
+    })
+    request.flush("Something went wrong", {
+      status: 404,
+      statusText: "Network error"
+    });
+    expect(service.showMessage).toHaveBeenCalledTimes(1)
+  })
+
+  it('deverá verificar exceção no método readById', () => {
+    const id = '1'
+    spyOn(service, "showMessage")
+    service.readById(id).subscribe()
+    const request = httpController.expectOne({
+      method: "GET",
+      url: service.baseUrl + `/${id}`
+    })
+    request.flush("Something went wrong", {
+      status: 404,
+      statusText: "Network error"
+    });
+    expect(service.showMessage).toHaveBeenCalledTimes(1)
   })
 
   it('deverá testar o método errorHandler', () => {
