@@ -1,5 +1,5 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -27,6 +27,9 @@ describe('Teste do componente AppComponent', () => {
 
   let productServiceStub: Partial<ProductService> = {
     read: () => of<ProductData[]>([{ id: 1, name: 'PRODUTO FAKE', price: 10, quantity: 10 }]),
+    create: () => of({ id: 1, name: 'PRODUTO FAKE', price: 10, quantity: 10 }),
+    update: () => of({ id: 1, name: 'PRODUTO FAKE', price: 10, quantity: 10 }),
+    delete: () => of({ id: 1, name: 'PRODUTO FAKE', price: 10, quantity: 10 }),
     showMessage: () => {}
   };
 
@@ -93,15 +96,62 @@ describe('Teste do componente AppComponent', () => {
   })
 
   it('deverá testar o método openDialog', fakeAsync(() => {
-    const acao = 'Adicionar';
+    const acaoAdicionar = 'Adicionar';
+    const acaoEditar = 'Editar';
+    const acaoExcluir = 'Excluir';
+
     fixture.detectChanges();
-    component.openDialog(acao, { id: '1', name: 'fake', price: 1, quantity: 1 });
+    component.openDialog(acaoAdicionar, { id: '1', name: 'fake', price: 1, quantity: 1 });
     fixture.detectChanges();
     tick();
     let title = document.getElementById('mat-dialog-title');
-    expect(title.innerText).withContext('com element  id').toContain(acao);
+    expect(title.innerText).withContext('com element  id').toContain(acaoAdicionar);
     title = document.getElementsByTagName('h1')[0]
-    expect(title.innerText).withContext('com element class').toContain(acao);
+    expect(title.innerText).withContext('com element class').toContain(acaoAdicionar);
+    let closeButton = document.getElementById('close-button');
+    closeButton.click();
+    fixture.detectChanges();
+    tick();
+    flush();
+    title = document.getElementById('mat-dialog-title');
+    expect(title).toBe(null) //Cuidado, pois pode ser falso negativo
+
+    fixture.detectChanges();
+    component.openDialog(acaoAdicionar, { id: '1', name: 'fake', price: 1, quantity: 1 });
+    fixture.detectChanges();
+    tick();
+    let actionButton = document.getElementById('action-button');
+    actionButton.click();
+    fixture.detectChanges();
+    tick();
+    flush();
+    title = document.getElementById('mat-dialog-title');
+    expect(title).toBe(null)
+
+    fixture.detectChanges();
+    component.openDialog(acaoEditar, { id: '1', name: 'fake', price: 1, quantity: 1 });
+    fixture.detectChanges();
+    tick();
+    actionButton = document.getElementById('action-button');
+    actionButton.click();
+    fixture.detectChanges();
+    tick();
+    flush();
+    title = document.getElementById('mat-dialog-title');
+    expect(title).toBe(null)
+
+    fixture.detectChanges();
+    component.openDialog(acaoExcluir, { id: '1', name: 'fake', price: 1, quantity: 1 });
+    fixture.detectChanges();
+    tick();
+    actionButton = document.getElementById('action-button');
+    actionButton.click();
+    fixture.detectChanges();
+    tick();
+    flush(); // espera o flush (simula passagem do tempo) do observable
+    title = document.getElementById('mat-dialog-title');
+    expect(title).toBe(null)
+
   }))
 
   it('verifica método calculaTotal', () => {
@@ -121,5 +171,23 @@ describe('Teste do componente AppComponent', () => {
     expect(component.products.data[0]).toEqual({ id: 1, name: 'PRODUTO FAKE', price: 10, quantity: 10 })
     expect(component.totalProduts).toEqual(100)
   }))
+
+  it('verifica método addRowData chama o método fetchData', () => {
+    spyOn(component, 'fetchData')
+    component.addRowData( { id: 1, name: 'fake', price: 10, quantity: 10 } )
+    expect(component.fetchData).toHaveBeenCalled();
+  })
+
+  it('verifica método updateRowData chama o método fetchData', () => {
+    spyOn(component, 'fetchData')
+    component.updateRowData({ id: 1, name: 'fake', price: 10, quantity: 10 })
+    expect(component.fetchData).toHaveBeenCalled();
+  })
+
+  it('verifica método deleteRowData chama o método fetchData', () => {
+    spyOn(component, 'fetchData')
+    component.deleteRowData({ id: 1, name: 'fake', price: 10, quantity: 10 })
+    expect(component.fetchData).toHaveBeenCalled();
+  })
 
 });

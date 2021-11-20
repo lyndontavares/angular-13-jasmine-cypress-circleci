@@ -66,7 +66,6 @@ export class AppComponent implements OnInit, OnDestroy{
   }
 
   addRowData(row_obj) {
-    var d = new Date();
     const product = {
       id: uuidv4(),
       name: row_obj.name,
