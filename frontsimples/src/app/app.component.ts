@@ -16,6 +16,7 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class AppComponent implements OnInit, OnDestroy{
 
+  title = "Angular Testing"
   products: MatTableDataSource<ProductData>;
   displayedColumns: string[] = ['id', 'name', 'price', 'quantity', 'total', 'action' ];
   products$: Subscription = null;
@@ -24,7 +25,7 @@ export class AppComponent implements OnInit, OnDestroy{
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private productService: ProductService, public dialog: MatDialog) { }
+  constructor(public productService: ProductService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.fetchData();
@@ -66,6 +67,7 @@ export class AppComponent implements OnInit, OnDestroy{
   }
 
   addRowData(row_obj) {
+    if (!row_obj) return
     const product = {
       id: uuidv4(),
       name: row_obj.name,
