@@ -119,25 +119,6 @@ describe('teste app2', () => {
        expect(location.path()).toBe ('/about');
     }))
 
-    /* usando mock para testar roteamento
-
-    1.crie mock com spy
-        let mockRouter = {
-             navigate: jasmine.createSpy('navigate')
-        };
-    2.define o provider
-    ...
-    providers: [
-        { provide: Router, useValue: mockRouter },
-
-    3.teste
-    it('should click link', () => {
-        let fixture = TestBed.createComponent(NavToolComponent);
-        fixture.detectChanges();
-        let component: NavToolComponent = fixture.componentInstance;
-        component.clickLink('home');
-        expect(mockRouter.navigate).toHaveBeenCalledWith(['/home']);
-    });
-    */
+    // //https://dev.to/this-is-angular/testing-angular-routing-components-with-the-routertestingmodule-4cj0
 
 })
