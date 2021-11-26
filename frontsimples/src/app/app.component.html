@@ -5,9 +5,12 @@
     </button>
     <span id="title" class="title">{{title}}</span>
     <span class="example-spacer"></span>
+    <button id="aboutButton" mat-icon-button [routerLink]="['/about']" >
+      <mat-icon>info</mat-icon>
+    </button>
     <button mat-icon-button (click)="fetchData()">
       <mat-icon>refresh</mat-icon>
-  </button>
+    </button>
   </mat-toolbar>
 </p>
 

@@ -22,6 +22,7 @@ import { MatCardModule } from '@angular/material/card';
 // **************************************************
 import ptBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
+import { BaseComponent } from './base.component';
 
 registerLocaleData(ptBr);
 // **************************************************
@@ -29,6 +30,7 @@ registerLocaleData(ptBr);
 @NgModule({
   declarations: [
     AppComponent,
+    BaseComponent,
     DialogBoxComponent,
   ],
   imports: [
@@ -54,6 +56,6 @@ registerLocaleData(ptBr);
     { provide: LOCALE_ID, useValue: 'pt' },
     // ************************************
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [BaseComponent]
 })
 export class AppModule { }

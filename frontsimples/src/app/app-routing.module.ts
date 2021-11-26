@@ -1,10 +1,17 @@
+import { importType } from '@angular/compiler/src/output/output_ast';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AppComponent } from './app.component';
 
-const routes: Routes = [];
+export const routes: Routes = [
+  { path:'', component: AppComponent},
+  { path:'about', loadChildren: () => import('./about/about.module').then((m) => m.AboutModule ) },
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  // PreloadAllModules: carrega todos os módulos
+  //
+  imports: [RouterModule.forRoot(routes,{ preloadingStrategy:  PreloadAllModules})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
