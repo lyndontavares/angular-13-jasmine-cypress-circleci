@@ -10,7 +10,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { DialogBoxComponent } from './dialog-box.component';
 
-describe('DialogBoxComponent', () => {
+describe('Teste do componente DialogBoxComponent', () => {
   let component: DialogBoxComponent;
   let fixture: ComponentFixture<DialogBoxComponent>;
 
