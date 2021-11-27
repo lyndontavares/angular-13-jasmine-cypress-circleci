@@ -93,7 +93,7 @@ describe('Teste do service ProductService', () => {
   })
   */
 
-  it('deverá verificar exceção no método read. Método showMessage é chamado para mostrar mensagem de erro', () => {
+  it('deverá verificar exceção no método read', () => {
     spyOn(service, "showMessage")
     service.read().subscribe(null)
     const request = httpController.expectOne(service.baseUrl);
