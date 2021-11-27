@@ -26,7 +26,7 @@ import { RouterTestingModule } from "@angular/router/testing"
 import { of } from "rxjs"
 import { routes } from './app-routing.module';
 
-describe('teste app2', () => {
+describe('Teste roteamento para AppComponent/AboutComponent', () => {
 
 
     let location: Location;
