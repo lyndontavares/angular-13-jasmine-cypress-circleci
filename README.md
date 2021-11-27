@@ -7,3 +7,7 @@ Aplicação web utilizando framework Angular e JSON Server para registro de prod
 * Crie testes unitários para os componentes deste projeto
 * Configure o Jasmine para teste de cobertura (coverage)
 * Crie pelo menos 1 teste de ponta a ponta com CYPRESS
+
+## Github
+
+https://github.com/lyndontavares/angular-13-jasmine
