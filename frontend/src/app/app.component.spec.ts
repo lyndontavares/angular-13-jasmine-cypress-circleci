@@ -89,10 +89,10 @@ describe('Teste do componente AppComponent', () => {
 
   it(`deverá testar método onDestroy`, () => {
     component.ngOnDestroy();
-    expect(component.products$).withContext('products$ inicialmente é undefined').toBe(null);
+    expect(component.products$).toBe(null);
     component.products$ = of([]).subscribe();
     component.ngOnDestroy();
-    expect(component.products$).withContext('atribuido observable a products$').toBe(null);
+    expect(component.products$).toBe(null);
   })
 
   it('deverá testar o método openDialog', fakeAsync(() => {
@@ -103,16 +103,19 @@ describe('Teste do componente AppComponent', () => {
     fixture.detectChanges();
     component.openDialog(acaoAdicionar, { id: '1', name: 'fake', price: 1, quantity: 1 });
     fixture.detectChanges();
+
     tick();
     let title = document.getElementById('mat-dialog-title');
     expect(title.innerText).withContext('com element  id').toContain(acaoAdicionar);
+
     title = document.getElementsByTagName('h1')[0]
     expect(title.innerText).withContext('com element class').toContain(acaoAdicionar);
+
     let closeButton = document.getElementById('close-button');
     closeButton.click();
     fixture.detectChanges();
-    tick();
     flush();
+
     title = document.getElementById('mat-dialog-title');
     expect(title).toBe(null) //Cuidado, pois pode ser falso negativo
 
@@ -123,8 +126,8 @@ describe('Teste do componente AppComponent', () => {
     let actionButton = document.getElementById('action-button');
     actionButton.click();
     fixture.detectChanges();
-    tick();
     flush();
+
     title = document.getElementById('mat-dialog-title');
     expect(title).toBe(null)
 
@@ -178,16 +181,34 @@ describe('Teste do componente AppComponent', () => {
     expect(component.fetchData).toHaveBeenCalled();
   })
 
+  it('verifica exceção no método addRowData', () => {
+    spyOn(component, 'fetchData')
+    component.addRowData(null)
+    expect(component.fetchData).not.toHaveBeenCalled();
+  })
+
   it('verifica método updateRowData chama o método fetchData', () => {
     spyOn(component, 'fetchData')
     component.updateRowData({ id: 1, name: 'fake', price: 10, quantity: 10 })
     expect(component.fetchData).toHaveBeenCalled();
   })
 
+  it('verifica exceção no método updateRowData', () => {
+    spyOn(component, 'fetchData')
+    component.updateRowData(null)
+    expect(component.fetchData).not.toHaveBeenCalled();
+  })
+
   it('verifica método deleteRowData chama o método fetchData', () => {
     spyOn(component, 'fetchData')
     component.deleteRowData({ id: 1, name: 'fake', price: 10, quantity: 10 })
     expect(component.fetchData).toHaveBeenCalled();
+  })
+
+  it('verifica exceção no método deleteRowData', () => {
+    spyOn(component, 'fetchData')
+    component.deleteRowData(null)
+    expect(component.fetchData).not.toHaveBeenCalled();
   })
 
 });

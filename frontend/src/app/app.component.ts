@@ -81,6 +81,7 @@ export class AppComponent implements OnInit, OnDestroy{
   }
 
   updateRowData(row_obj) {
+    if (!row_obj) return
     const product = {
       id: row_obj.id,
       name: row_obj.name,
@@ -94,6 +95,7 @@ export class AppComponent implements OnInit, OnDestroy{
   }
 
   deleteRowData(product) {
+    if (!product) return
     const id = `${product.id}`;
     this.productService.delete(id).subscribe(() => {
       this.productService.showMessage(`Produto com id ${id} excluido com sucesso!`);
