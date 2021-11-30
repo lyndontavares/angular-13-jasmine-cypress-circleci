@@ -11,7 +11,7 @@ npm run test:cover
 
 ![](assets/app.PNG)
 
-### Karma
+### Tests
 
 ![](assets/karma.PNG)
 
