@@ -108,7 +108,7 @@ export class AppComponent implements OnInit, OnDestroy {
     return products.reduce((total, valor) => total + (valor.price * valor.quantity), 0);
   }
 
-  isProdutoValido(produto: ProductData): boolean {
+  isProdutoValido(produto): boolean {
     if (!produto) {
       this.productService.showMessage("Produto Inválido!", true)
       return false
@@ -117,11 +117,11 @@ export class AppComponent implements OnInit, OnDestroy {
       this.productService.showMessage("Erro: Nome não pode está vazio", true)
       return false
     }
-    if (produto.price <= 0) {
-      this.productService.showMessage("Erro: Preço deve ser maior que zero]", true)
+    if (isNaN(produto.price) || produto.price <= 0) {
+      this.productService.showMessage("Erro: Preço deve ser maior que zero", true)
       return false
     }
-    if (produto.quantity <= 0) {
+    if (isNaN(produto.quantity) || produto.quantity <= 0) {
       this.productService.showMessage("Erro: Quantidade deve ser maior que zero", true)
       return false
     }
