@@ -7,6 +7,9 @@ Aplicação web utilizando framework Angular e JSON Server para registro de prod
 ```bash
 npm run test:cover
 ```
+### App
+
+![](assets/app.PNG)
 
 ### Karma
 
