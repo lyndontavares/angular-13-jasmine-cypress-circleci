@@ -103,8 +103,8 @@ describe('Teste do componente AppComponent', () => {
     fixture.detectChanges();
     component.openDialog(acaoAdicionar, { id: '1', name: 'fake', price: 1, quantity: 1 });
     fixture.detectChanges();
+    flush();  // espera o flush (simula passagem do tempo) do observable
 
-    tick();
     let title = document.getElementById('mat-dialog-title');
     expect(title.innerText).withContext('com element  id').toContain(acaoAdicionar);
 
@@ -122,7 +122,8 @@ describe('Teste do componente AppComponent', () => {
     fixture.detectChanges();
     component.openDialog(acaoAdicionar, { id: '1', name: 'fake', price: 1, quantity: 1 });
     fixture.detectChanges();
-    tick();
+    flush();
+
     let actionButton = document.getElementById('action-button');
     actionButton.click();
     fixture.detectChanges();
@@ -131,27 +132,28 @@ describe('Teste do componente AppComponent', () => {
     title = document.getElementById('mat-dialog-title');
     expect(title).toBe(null)
 
-    fixture.detectChanges();
     component.openDialog(acaoEditar, { id: '1', name: 'fake', price: 1, quantity: 1 });
     fixture.detectChanges();
-    tick();
+    flush();
+
     actionButton = document.getElementById('action-button');
     actionButton.click();
     fixture.detectChanges();
-    tick();
     flush();
+
     title = document.getElementById('mat-dialog-title');
     expect(title).toBe(null)
 
     fixture.detectChanges();
     component.openDialog(acaoExcluir, { id: '1', name: 'fake', price: 1, quantity: 1 });
     fixture.detectChanges();
-    tick();
+    flush();
+
     actionButton = document.getElementById('action-button');
     actionButton.click();
     fixture.detectChanges();
-    tick();
-    flush(); // espera o flush (simula passagem do tempo) do observable
+    flush();
+
     title = document.getElementById('mat-dialog-title');
     expect(title).toBe(null)
 
