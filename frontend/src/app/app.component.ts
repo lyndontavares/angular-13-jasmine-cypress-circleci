@@ -8,17 +8,18 @@ import { ProductService } from './product.service';
 import { ProductData } from './product-data.model';
 import { Subscription } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
+import { CheckboxRequiredValidator } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy{
+export class AppComponent implements OnInit, OnDestroy {
 
   title = "Angular Testing"
   products: MatTableDataSource<ProductData>;
-  displayedColumns: string[] = ['id', 'name', 'price', 'quantity', 'total', 'action' ];
+  displayedColumns: string[] = ['id', 'name', 'price', 'quantity', 'total', 'action'];
   products$: Subscription = null;
   totalProduts = 0;
 
@@ -56,18 +57,18 @@ export class AppComponent implements OnInit, OnDestroy{
     });
 
     dialogRef.afterClosed().subscribe(result => {
-        if (result.event == 'Adicionar') {
-          this.addRowData(result.data);
-        } else if (result.event == 'Editar') {
-          this.updateRowData(result.data);
-        } else if (result.event == 'Excluir') {
-          this.deleteRowData(result.data);
-        }
-      });
+      if (result.event == 'Adicionar') {
+        this.addRowData(result.data);
+      } else if (result.event == 'Editar') {
+        this.updateRowData(result.data);
+      } else if (result.event == 'Excluir') {
+        this.deleteRowData(result.data);
+      }
+    });
   }
 
   addRowData(row_obj) {
-    if (!row_obj) return
+    if (!this.isProdutoValido(row_obj)) return
     const product = {
       id: uuidv4(),
       name: row_obj.name,
@@ -81,7 +82,7 @@ export class AppComponent implements OnInit, OnDestroy{
   }
 
   updateRowData(row_obj) {
-    if (!row_obj) return
+    if (!this.isProdutoValido(row_obj)) return
     const product = {
       id: row_obj.id,
       name: row_obj.name,
@@ -103,8 +104,28 @@ export class AppComponent implements OnInit, OnDestroy{
     });
   }
 
-  calculaTotal(products: ProductData[] ): number {
-    return products.reduce((total, valor) => total + ( valor.price * valor.quantity), 0);
+  calculaTotal(products: ProductData[]): number {
+    return products.reduce((total, valor) => total + (valor.price * valor.quantity), 0);
+  }
+
+  isProdutoValido(produto: ProductData): boolean {
+    if (!produto) {
+      this.productService.showMessage("Produto Inválido!", true)
+      return false
+    }
+    if (!produto.name) {
+      this.productService.showMessage("Erro: Nome não pode está vazio", true)
+      return false
+    }
+    if (produto.price <= 0) {
+      this.productService.showMessage("Erro: Preço deve ser maior que zero]", true)
+      return false
+    }
+    if (produto.quantity <= 0) {
+      this.productService.showMessage("Erro: Quantidade deve ser maior que zero", true)
+      return false
+    }
+    return true
   }
 
 }

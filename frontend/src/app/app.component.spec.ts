@@ -30,10 +30,10 @@ describe('Teste do componente AppComponent', () => {
     create: () => of({ id: 1, name: 'PRODUTO FAKE', price: 10, quantity: 10 }),
     update: () => of({ id: 1, name: 'PRODUTO FAKE', price: 10, quantity: 10 }),
     delete: () => of({ id: 1, name: 'PRODUTO FAKE', price: 10, quantity: 10 }),
-    showMessage: () => {}
+    showMessage: () => { }
   };
 
-  beforeEach( async() => {
+  beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule, // desabilitar animações
@@ -62,7 +62,7 @@ describe('Teste do componente AppComponent', () => {
     }).compileComponents();
   });
 
-  beforeEach( async() => {
+  beforeEach(async () => {
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -158,7 +158,7 @@ describe('Teste do componente AppComponent', () => {
   }))
 
   it('verifica método calculaTotal', () => {
-    const produtos : ProductData[] = [{ id: 1, name: 'fake', price: 10, quantity: 10 }]
+    const produtos: ProductData[] = [{ id: 1, name: 'fake', price: 10, quantity: 10 }]
     const total = component.calculaTotal(produtos);
     expect(total).toBe(100);
   })
@@ -167,7 +167,7 @@ describe('Teste do componente AppComponent', () => {
     component.fetchData();
     tick()
     expect(component.products.data.length).toEqual(1)
-    expect(component.products.data[0].id ).toEqual(1)
+    expect(component.products.data[0].id).toEqual(1)
     expect(component.products.data[0].name).toEqual('PRODUTO FAKE')
     expect(component.products.data[0].price).toEqual(10)
     expect(component.products.data[0].quantity).toEqual(10)
@@ -177,7 +177,7 @@ describe('Teste do componente AppComponent', () => {
 
   it('verifica método addRowData chama o método fetchData', () => {
     spyOn(component, 'fetchData')
-    component.addRowData( { id: 1, name: 'fake', price: 10, quantity: 10 } )
+    component.addRowData({ id: 1, name: 'fake', price: 10, quantity: 10 })
     expect(component.fetchData).toHaveBeenCalled();
   })
 
@@ -209,6 +209,22 @@ describe('Teste do componente AppComponent', () => {
     spyOn(component, 'fetchData')
     component.deleteRowData(null)
     expect(component.fetchData).not.toHaveBeenCalled();
+  })
+
+  it('verifica método isProdutoValido', () => {
+    spyOn(component.productService, 'showMessage')
+
+    let produto: ProductData = { id: 1, name: '', price: 0, quantity: 0 }
+    component.isProdutoValido(produto)
+    expect(component.productService.showMessage).toHaveBeenCalled();
+
+    produto = { id: 1, name: 'fake', price: 0, quantity: 0 }
+    component.isProdutoValido(produto)
+    expect(component.productService.showMessage).toHaveBeenCalled();
+
+    produto = { id: 1, name: 'fake', price: 1, quantity: 0 }
+    component.isProdutoValido(produto)
+    expect(component.productService.showMessage).toHaveBeenCalled();
   })
 
 });
