@@ -48,7 +48,7 @@ yarn cypress open
 
 ### Tests
 
-![](assets/amgular-karma.PNG)
+![](assets/angular-karma.PNG)
 
 ### Coverage
 
