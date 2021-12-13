@@ -62,4 +62,4 @@ yarn cypress open
 
 ## Github
 
-https://github.com/lyndontavares/angular-13-jasmine
+https://github.com/lyndontavares/angular-13-jasmine-cypress
