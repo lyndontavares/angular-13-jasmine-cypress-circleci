@@ -20,7 +20,9 @@ npm i
 Instalação Cypress
 
 ```bash
-npx cypress run
+npm i cypress -D
+ou
+yarn add cypress --dev
 ```
 
 Executar testes com Jasmine
