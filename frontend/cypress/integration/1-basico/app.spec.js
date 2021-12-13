@@ -30,7 +30,7 @@ describe('example to-do app', () => {
     // Usamos o comando `cy.get ()` para obter todos os elementos que correspondem ao seletor.
     // Então, usamos `deveria` para afirmar que existem dois itens correspondentes,
     // quais são os dois itens padrão.
-    cy.get('tr').should('have.length', 9) // linhas da tabela contando com o Header deve ser igual a 9 linhas
+    cy.get('tr').should('have.length', 9) // linhas da tabela default
 
     // Podemos ir ainda mais longe e verificar se cada padrão todos contém
     // o texto correto. Usamos as funções `primeiro` e` último`
@@ -61,7 +61,7 @@ describe('example to-do app', () => {
     cy.wait(1000)
     cy.get('tr').last().find('a').last().click()
     cy.get('#action-button').click()
-    cy.get('tr').should('have.length', 9) // linhas da tabela contando com o Header deve ser igual a 9 linhas
+    cy.get('tr').should('have.length', 9) // linhas da tabela default
   })
 
 })
