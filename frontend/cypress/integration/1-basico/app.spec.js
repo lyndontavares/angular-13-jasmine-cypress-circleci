@@ -59,13 +59,9 @@ describe('example to-do app', () => {
 
     //remove o item adicionado para deixar teste repetitível
     cy.wait(1000)
-    //cy.wait('@actions')
     cy.get('tr').last().find('a').last().click()
-    //cy.wait(5000)
     cy.get('#action-button').click()
     cy.get('tr').should('have.length', 9) // linhas da tabela contando com o Header deve ser igual a 9 linhas
-
-
   })
 
 })
