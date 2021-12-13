@@ -34,6 +34,7 @@ Executar testes com Cypress
 ```bash
 npm run server:json
 ng serve
+
 npx cypress run
 ou
 yarn cypress open
