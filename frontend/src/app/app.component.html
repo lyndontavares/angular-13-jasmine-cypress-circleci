@@ -17,7 +17,7 @@
 <div class="container text-center">
 
   <div class="btn-actions">
-    <button mat-button (click)="openDialog('Adicionar',{})" mat-flat-button color="primary">Adicionar Produto</button>
+    <button mat-button id="btnAdicionar" (click)="openDialog('Adicionar',{})" mat-flat-button color="primary">Adicionar Produto</button>
   </div>
 
   <table mat-table [dataSource]="products" #mytable class="my-table mat-elevation-z8">

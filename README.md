@@ -4,20 +4,57 @@ Aplicação web utilizando framework Angular e JSON Server para registro de prod
 
 ## Projeto Final
 
+Instalção json-server
+
+```bash
+npm i -g json-server
+```
+
+Instalação App
+
+```bash
+cd frontend
+npm i
+```
+
+Instalação Cypress
+
+```bash
+npx cypress run
+```
+
+Executar testes com Jasmine
+
 ```bash
 npm run test:cover
 ```
+
+Executar testes com Cypress
+
+```bash
+npm run server:json
+ng serve
+npx cypress run
+ou
+yarn cypress open
+```
+
 ### App
 
 ![](assets/app.PNG)
 
 ### Tests
 
-![](assets/karma.PNG)
+![](assets/amgular-karma.PNG)
 
 ### Coverage
 
-![](assets/coverage.PNG)
+![](assets/angular-coverage.PNG)
+
+
+### Cypress
+
+![](assets/angular-cypress.PNG)
 
 
 ## Github
