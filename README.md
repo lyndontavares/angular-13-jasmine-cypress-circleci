@@ -1,6 +1,5 @@
 # Workshop - Angular Testes com Jasmine e Karma
 
-[![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 [![angular](https://badges.aleen42.com/src/angular.svg)](https://badges.aleen42.com/src/angular.svg)
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](http://opensource.org/licenses/MIT)
 [![CircleCI](https://circleci.com/gh/lyndontavares/angular-13-jasmine-cypress.svg?style=shield)](https://circleci.com/gh/lyndontavares/angular-13-jasmine-cypress)
