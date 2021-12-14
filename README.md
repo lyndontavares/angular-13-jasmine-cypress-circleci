@@ -54,11 +54,13 @@ yarn cypress open
 
 ![](assets/angular-coverage.PNG)
 
-
 ### Cypress
 
 ![](assets/angular-cypress.PNG)
 
+### CircleCi
+
+![](assets/angular-circleci.PNG)
 
 ## Github
 
