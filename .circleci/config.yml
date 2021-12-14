@@ -1,14 +1,15 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/my-project
+    working_directory: ~/my-project/frontend
     docker:
       - image: circleci/node:12.15-browsers
     steps:
       - checkout
+          path: ~/my-project
       #- restore_cache:
       #    key: my-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
-      - run: cd frontend/; npm install
+      - run: npm install
       - save_cache:
           key: my-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
           paths:
