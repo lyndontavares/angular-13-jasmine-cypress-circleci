@@ -10,7 +10,7 @@ jobs:
       #    key: my-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
       - run: ls
       - run: cd ./frontend
-      - run: npm install
+      - run: cd && npm install
       - save_cache:
           key: my-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
           paths:
