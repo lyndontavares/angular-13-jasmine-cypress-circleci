@@ -4,7 +4,7 @@
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](http://opensource.org/licenses/MIT)
 [![CircleCI](https://circleci.com/gh/lyndontavares/angular-13-jasmine-cypress-circleci.svg?style=shield)](https://circleci.com/gh/lyndontavares/angular-13-jasmine-cypress-circleci)
 
-Aplicação web utilizando framework Angular e JSON Server para registro de produtos, com os comandos de um CRUD: criar, ler, atualizar e deletar
+Aplicação desenvolvida no curso que ministrei, utilizando framework Angular e JSON Server para registro de produtos, com os comandos de um CRUD: criar, ler, atualizar e deletar
 
 ## Projeto Final
 
@@ -65,6 +65,10 @@ yarn cypress open
 ### CircleCi
 
 ![](assets/angular-circleci.PNG)
+
+### Workshop
+
+![](assets/workshop.PNG)
 
 ## Github
 
